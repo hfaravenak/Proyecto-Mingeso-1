@@ -12,17 +12,17 @@ import org.hibernate.type.SqlTypes;
 public class ProveedorEntity {
     @Id
     @Column(name = "codigo", nullable = false)
-    private Long codigo;
+    private String codigo;
 
     private String nombre;
     private String categoria;
     private Boolean retencion;
 
-    public Long getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(Long codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 

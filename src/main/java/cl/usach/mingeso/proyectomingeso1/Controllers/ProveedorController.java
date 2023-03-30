@@ -18,11 +18,11 @@ public class ProveedorController {
     @Autowired
     ProveedorService proveedorService;
 
-    @GetMapping
+    @GetMapping("/listar")
     List<ProveedorEntity> listarProveedores() {
         return proveedorService.obtenerProveedores();
     }
-    @PostMapping
+    @PostMapping("/agregar")
     private ResponseEntity<ProveedorEntity> createProveedor(@RequestBody ProveedorEntity proveedor){
         try{
             ProveedorEntity user1 = proveedorService.guardarProveedor(proveedor);
