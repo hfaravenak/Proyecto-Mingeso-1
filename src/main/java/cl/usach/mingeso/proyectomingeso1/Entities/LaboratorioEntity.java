@@ -49,4 +49,5 @@ public class LaboratorioEntity {
     public void setPorcSolidosTotales(Integer porcSolidosTotales) {
         this.porcSolidosTotales = porcSolidosTotales;
     }
+
 }
