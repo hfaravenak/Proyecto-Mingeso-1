@@ -1,6 +1,5 @@
 package cl.usach.mingeso.proyectomingeso1.Services;
 
-import cl.usach.mingeso.proyectomingeso1.Entities.AcopioEntity;
 import cl.usach.mingeso.proyectomingeso1.Entities.LaboratorioEntity;
 import cl.usach.mingeso.proyectomingeso1.Repositories.LaboratorioRepository;
 import lombok.Generated;
