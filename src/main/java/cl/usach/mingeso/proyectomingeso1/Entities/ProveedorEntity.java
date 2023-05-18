@@ -16,7 +16,7 @@ public class ProveedorEntity {
 
     private String nombre;
     private String categoria;
-    private Boolean retencion;
+    private String retencion;
 
     public String getCodigo() {
         return codigo;
@@ -42,11 +42,11 @@ public class ProveedorEntity {
         this.categoria = categoria;
     }
 
-    public Boolean getRetencion() {
+    public String getRetencion() {
         return retencion;
     }
 
-    public void setRetencion(Boolean retencion) {
+    public void setRetencion(String retencion) {
         this.retencion = retencion;
     }
 }

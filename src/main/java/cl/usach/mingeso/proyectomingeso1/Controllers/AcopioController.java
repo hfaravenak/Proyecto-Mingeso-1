@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("acopio")
+@RequestMapping("/acopio")
 public class AcopioController {
     @Autowired
     AcopioService acopioService;

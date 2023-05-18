@@ -16,7 +16,17 @@ public class ProveedorService {
     public List<ProveedorEntity> obtenerProveedores(){
         return proveedorRepository.findAll();
     }
-    public ProveedorEntity guardarProveedor(ProveedorEntity proveedor){
-        return proveedorRepository.save(proveedor);
+    public void guardarProveedor(String codigo, String nombre, String categoria, String retencion){
+        ProveedorEntity proveedor = new ProveedorEntity();
+        proveedor.setCodigo(codigo);
+        proveedor.setNombre(nombre);
+        proveedor.setCategoria(categoria);
+        proveedor.setRetencion(retencion);
+        proveedorRepository.save(proveedor);
     }
+
+    public ProveedorEntity findByCodigo(String codigo){
+        return proveedorRepository.findByCodigo(codigo);
+    }
+
 }

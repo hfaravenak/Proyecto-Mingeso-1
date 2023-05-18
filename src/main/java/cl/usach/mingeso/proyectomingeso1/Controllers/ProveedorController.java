@@ -13,7 +13,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @Controller
-@RequestMapping("proveedor")
+@RequestMapping("/proveedor")
 public class ProveedorController {
     @Autowired
     ProveedorService proveedorService;
@@ -24,13 +24,19 @@ public class ProveedorController {
         model.addAttribute("proveedores", proveedores);
         return "index";
     }
-    @PostMapping("/agregar")
-    private ResponseEntity<ProveedorEntity> createProveedor(@RequestBody ProveedorEntity proveedor) {
-        try {
-            ProveedorEntity user1 = proveedorService.guardarProveedor(proveedor);
-            return ResponseEntity.created(new URI("/User" + user1.getCodigo())).body(user1);
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
+
+
+    @GetMapping("/agregar-proveedor")
+    public String proveedor(){
+        return "agregar-proveedor";
     }
+    @PostMapping("/agregar-proveedor")
+    public String nuevoProveedor(@RequestParam("codigo") String codigo,
+                                 @RequestParam("nombre") String nombre,
+                                 @RequestParam("categoria") String categoria,
+                                 @RequestParam("retencion") String retencion){
+        proveedorService.guardarProveedor(codigo, nombre, categoria, retencion);
+        return "redirect:/agregar-proveedor";
+    }
+
 }
