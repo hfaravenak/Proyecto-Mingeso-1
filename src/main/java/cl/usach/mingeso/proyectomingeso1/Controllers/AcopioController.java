@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -20,22 +19,22 @@ public class AcopioController {
 
     @GetMapping("/fileUpload")
     public String main() {
-        return "fileUpload";
+        return "acopioFileUpload";
     }
 
     @PostMapping("/fileUpload")
     public String upload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
         acopioService.guardarArchivo(file);
-        redirectAttributes.addFlashAttribute("mensaje", "¡Archivo cargado correctamente!");
+        redirectAttributes.addFlashAttribute("mensaje", "¡Archivo de Acopio cargado correctamente!");
         acopioService.leerCsv("Acopio.csv");
-        return "redirect:/fileUpload";
+        return "redirect:/acopio/fileUpload";
     }
 
     @GetMapping("/fileInformation")
     public String listar(Model model) {
         List<AcopioEntity> datas = acopioService.obtenerAcopios();
         model.addAttribute("datas", datas);
-        return "fileInformation";
+        return "acopioFileInformation";
     }
 }
 

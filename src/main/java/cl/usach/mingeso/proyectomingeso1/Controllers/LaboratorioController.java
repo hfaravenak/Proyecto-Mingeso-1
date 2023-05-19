@@ -22,22 +22,20 @@ public class LaboratorioController {
     LaboratorioService laboratorioService;
 
     @GetMapping("/fileUpload")
-    public String main() {
-        return "fileUpload";
-    }
+    public String main() { return "lab-file-upload"; }
 
     @PostMapping("/fileUpload")
     public String upload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
         laboratorioService.guardarArchivo(file);
         redirectAttributes.addFlashAttribute("mensaje", "¡Archivo cargado correctamente!");
         laboratorioService.leerCsv("Laboratorio.csv");
-        return "redirect:/fileUpload";
+        return "redirect:/laboratorio/fileUpload";
     }
 
     @GetMapping("/fileInformation")
     public String listar(Model model) {
         List<LaboratorioEntity> datas = laboratorioService.obtenerDataLab();
         model.addAttribute("datas", datas);
-        return "fileInformation";
+        return "lab-file-information";
     }
 }

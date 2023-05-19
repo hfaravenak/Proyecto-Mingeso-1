@@ -28,15 +28,14 @@ public class ProveedorController {
 
     @GetMapping("/agregar-proveedor")
     public String proveedor(){
-        return "agregar-proveedor";
-    }
+        return "agregar-proveedor"; }
     @PostMapping("/agregar-proveedor")
     public String nuevoProveedor(@RequestParam("codigo") String codigo,
                                  @RequestParam("nombre") String nombre,
                                  @RequestParam("categoria") String categoria,
                                  @RequestParam("retencion") String retencion){
         proveedorService.guardarProveedor(codigo, nombre, categoria, retencion);
-        return "redirect:/agregar-proveedor";
+        return "redirect:/proveedor/listar";
     }
 
 }

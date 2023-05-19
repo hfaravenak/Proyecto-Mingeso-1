@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
-    <title>Cargar CSV</title>
+    <title>Cargar CSV Acopio</title>
     <style>
         .container{
             display: flex;
@@ -36,7 +36,7 @@
                 margin-right: 200px;}
         }
         .header{
-            background-color: #1b3039;
+            background-color: #1b3038;
             display: flex;
             justify-content: flex-end;
             align-items: center;
@@ -97,12 +97,12 @@
     <nav>
     </nav>
     <a class="btn" href="/"><button>Volver al menú principal</button></a>
-    <a class="btn-2" href="/fileInformation"><button>Ver el último CSV cargado</button></a>
+    <a class="btn-2" href="/acopio/fileInformation"><button>Ver el último CSV de acopio cargado</button></a>
 </header>
 <div class = "f">
     <div class="container">
-        <h1><b>Cargar el archivo de datos</b></h1>
-        <form th:action="@{/fileUpload}" method="POST" enctype="multipart/form-data">
+        <h1><b>Cargar el archivo de datos de un acopio</b></h1>
+        <form th:action="@{/acopio/fileUpload}" method="POST" enctype="multipart/form-data">
             <br>
             <input type="file" class="form-control" name="file" accept = ".csv">
             <br>
