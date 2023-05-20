@@ -16,7 +16,7 @@ public class QuincenaEntity {
     @Column(name = "ID", nullable = false)
     private  Integer ID;
 
-    private String quincena;
+    private Integer quincena;
 
     private Date fecha;
 
@@ -24,7 +24,7 @@ public class QuincenaEntity {
     @JoinColumn(name = "proveedor", referencedColumnName = "codigo")
     private ProveedorEntity proveedor;
 
-    private Integer kilos;
+    private Double kilos;
 
     private Integer diasAcopioMT;
 
@@ -32,9 +32,9 @@ public class QuincenaEntity {
 
     private Integer diasAcopioT;
 
-    private Integer porcentajeGrasa;
+    private Double porcentajeGrasa;
 
-    private Integer porcentajeSolidosTotales;
+    private Double porcentajeSolidosTotales;
 
     public Integer getID() {
         return ID;
@@ -44,11 +44,11 @@ public class QuincenaEntity {
         this.ID = ID;
     }
 
-    public String getQuincena() {
+    public Integer getQuincena() {
         return quincena;
     }
 
-    public void setQuincena(String quincena) {
+    public void setQuincena(Integer quincena) {
         this.quincena = quincena;
     }
 
@@ -68,11 +68,11 @@ public class QuincenaEntity {
         this.proveedor = proveedor;
     }
 
-    public Integer getKilos() {
+    public Double getKilos() {
         return kilos;
     }
 
-    public void setKilos(Integer kilos) {
+    public void setKilos(Double kilos) {
         this.kilos = kilos;
     }
 
@@ -100,19 +100,19 @@ public class QuincenaEntity {
         this.diasAcopioT = diasAcopioT;
     }
 
-    public Integer getPorcentajeGrasa() {
+    public Double getPorcentajeGrasa() {
         return porcentajeGrasa;
     }
 
-    public void setPorcentajeGrasa(Integer porcentajeGrasa) {
+    public void setPorcentajeGrasa(Double porcentajeGrasa) {
         this.porcentajeGrasa = porcentajeGrasa;
     }
 
-    public Integer getPorcentajeSolidosTotales() {
+    public Double getPorcentajeSolidosTotales() {
         return porcentajeSolidosTotales;
     }
 
-    public void setPorcentajeSolidosTotales(Integer porcentajeSolidosTotales) {
+    public void setPorcentajeSolidosTotales(Double porcentajeSolidosTotales) {
         this.porcentajeSolidosTotales = porcentajeSolidosTotales;
     }
 }
