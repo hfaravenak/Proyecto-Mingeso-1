@@ -31,13 +31,11 @@ public class QuincenaController {
         return quincenaService.obtenerVariacionKilos(proveedor);
     }
 
-    /*
+
     @GetMapping("nuevaquincena/{codigo}")
     public QuincenaEntity nuevaQuincena(@PathVariable("codigo") String codigo) {
         return quincenaService.crearQuincena(codigo);
     }
-    */
-
 
     //Estos son puros testings de metodos
     @GetMapping("/obtener-proveedor/{codigo}")
@@ -46,28 +44,37 @@ public class QuincenaController {
     }
 
     @GetMapping("obtener-klsleche/{codigo}")
-    public List<String> obtenerTodosKlsLeche(@PathVariable("codigo") String codigo) {
-        return quincenaService.obtenerKilosLechePorProveedor(codigo);
-    }
-
-    @GetMapping("obtener-turno/{codigo}")
-    public List<String> obtenerTurnoAcopio(@PathVariable("codigo") String codigo) {
-        return quincenaService.obtenerTurnoAcopioPorProveedor(codigo);
+    public Double obtenerTodosKlsLeche(@PathVariable("codigo") String codigo) {
+        return quincenaService.obtenerTotalKilosLechePorProveedor(codigo);
     }
 
     @GetMapping("obtener-fecha/{codigo}")
-    public List<Date> obtenerFechaAcopio(@PathVariable("codigo") String codigo) {
-        return quincenaService.obtenerFechasAcopio(codigo);
+    public Date obtenerFechaAcopio(@PathVariable("codigo") String codigo) {
+        return quincenaService.obtenerFechaPorProveedor(codigo);
     }
 
     @GetMapping("obtener-porcentajegrasa/{codigo}")
-    public List<Double> obtenerPorcentajeGrasa(@PathVariable("codigo") String codigo) {
-        return quincenaService.obtenerPorcentajeGrasaLaboratorio(codigo);
+    public Double obtenerPorcentajeGrasa(@PathVariable("codigo") String codigo) {
+        return quincenaService.obtenerTotalPorcentajeGrasaLaboratorio(codigo);
     }
 
     @GetMapping("obtener-porcentajesolidos/{codigo}")
-    public List<Double> obtenerPorcentajeSolidos(@PathVariable("codigo") String codigo) {
-        return quincenaService.obtenerPorcentajeSolidosTotalesLaboratorio(codigo);
+    public Double obtenerPorcentajeSolidos(@PathVariable("codigo") String codigo) {
+        return quincenaService.obtenerTotalPorcentajeSolidosTotalesLaboratorio(codigo);
     }
 
+    @GetMapping("obtener-diasacopiom/{codigo}")
+    public Integer obtenerDiasAcopioMañana(@PathVariable("codigo") String codigo) {
+        return quincenaService.contarDiasAcopiom(codigo);
+    }
+
+    @GetMapping("obtener-diasacopiot/{codigo}")
+    public Integer obtenerDiasAcopioTarde(@PathVariable("codigo") String codigo) {
+        return quincenaService.contarDiasAcopiot(codigo);
+    }
+
+    @GetMapping("obtener-diasacopiomt/{codigo}")
+    public Integer obtenerDiasAcopioMañanaYtarde(@PathVariable("codigo") String codigo) {
+        return quincenaService.contarDiasAcopiomt(codigo);
+    }
 }

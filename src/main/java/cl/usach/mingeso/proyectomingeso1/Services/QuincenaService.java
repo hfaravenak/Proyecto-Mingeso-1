@@ -13,10 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class QuincenaService {
@@ -32,6 +29,7 @@ public class QuincenaService {
 
     @Autowired
     ProveedorService proveedorService;
+
     @Autowired
     private ProveedorRepository proveedorRepository;
 
@@ -43,13 +41,20 @@ public class QuincenaService {
     }
 
     //a traves del codigo de un proveedor obtiene los kilos leche de sus acopios
-    public List<String> obtenerKilosLechePorProveedor(String codigoProveedor) {
-        return acopioRepository.findKlsLecheByProveedor(codigoProveedor);
-    }
+    public double obtenerTotalKilosLechePorProveedor(String codigoProveedor) {
+        List<String> kilosLeche = acopioRepository.findKlsLecheByProveedor(codigoProveedor);
+        double totalKilos = 0.0;
 
-    //a traves del codigo de un proveedor obtiene el turno de un acopio (M, MT, T)
-    public List<String> obtenerTurnoAcopioPorProveedor(String codigoProveedor){
-        return acopioRepository.findTurnoByProveedor(codigoProveedor);
+        for (String kilos : kilosLeche) {
+            try {
+                double kilosDouble = Double.parseDouble(kilos);
+                totalKilos += kilosDouble;
+            } catch (NumberFormatException e) {
+                // Manejar excepción si el valor no se puede convertir a double
+            }
+        }
+
+        return totalKilos;
     }
 
     //metodo para convertir un string a date
@@ -58,27 +63,25 @@ public class QuincenaService {
         return dateFormat.parse(dateString);
     }
 
-    public List<Date> obtenerFechasAcopio(String codigo) {
-        List<AcopioEntity> acopios = acopioRepository.findAllByProveedor(codigo);
-        List<Date> fechas = new ArrayList<>();
+    //a traves del codigo de un proveedor obtiene la fecha de su primer acopio
+    public Date obtenerFechaPorProveedor(String codigoProveedor) {
+        List<AcopioEntity> acopios = acopioRepository.findAllByProveedor(codigoProveedor);
 
-        for (AcopioEntity acopio : acopios) {
+        if (!acopios.isEmpty()) {
+            AcopioEntity acopio = acopios.get(0); // Obtener el primer acopio del proveedor
             String fechaString = acopio.getFecha();
-            Date fecha = null;
 
             try {
-                fecha = convertStringToDate(fechaString);
+                return convertStringToDate(fechaString);
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
-
-            fechas.add(fecha);
         }
 
-        return fechas;
+        return null; // Si no se encontraron acopios para el proveedor
     }
 
-    //metodo que retorna 1 si la fecha es la primera quincena y 2 si es la segunda quincena
+    //metodo que retorna 1 si la fecha es la primera quincena y 2 si es la segunda quincena de un mes
     public int obtenerNumeroQuincena(Date fecha) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(fecha);
@@ -92,29 +95,136 @@ public class QuincenaService {
         }
     }
 
-    //metodo que retorna una lista de enteros con el numero de quincena de cada fecha
-    public List<Integer> obtenerNroListaQuincenas(List<Date> fechas) {
-        List<Integer> nroQuincenas = new ArrayList<>();
+    //a traves del codigo de un proveedor obtiene el porcentaje TOTAL de grasa de un laboratorio
+    public double obtenerTotalPorcentajeGrasaLaboratorio(String codigoProveedor) {
+        List<Double> porcentajesGrasa = laboratorioRepository.findPorcGrasaByProveedor(codigoProveedor);
+        double totalPorcentajeGrasa = 0.0;
 
-        for (Date fecha : fechas) {
-            int numeroQuincena = obtenerNumeroQuincena(fecha);
-            nroQuincenas.add(numeroQuincena);
+        for (Double porcentaje : porcentajesGrasa) {
+            if (porcentaje != null) {
+                totalPorcentajeGrasa += porcentaje;
+            }
         }
 
-        return nroQuincenas;
+        return totalPorcentajeGrasa;
     }
 
+    //a traves del codigo de un proveedor obtiene el porcentaje TOTAL de solidos totales de un laboratorio
+    public double obtenerTotalPorcentajeSolidosTotalesLaboratorio(String codigoProveedor) {
+        List<Double> porcentajesSolidosTotales = laboratorioRepository.findPorcSolidosTotalesByProveedor(codigoProveedor);
+        double totalPorcentajeSolidosTotales = 0.0;
 
-    //a traves del codigo de un proveedor obtiene el porcentaje de grasa de un laboratorio
-    public List<Double> obtenerPorcentajeGrasaLaboratorio(String codigoProveedor) {
-        return laboratorioRepository.findPorcGrasaByProveedor(codigoProveedor);
+        for (Double porcentaje : porcentajesSolidosTotales) {
+            if (porcentaje != null) {
+                totalPorcentajeSolidosTotales += porcentaje;
+            }
+        }
+
+        return totalPorcentajeSolidosTotales;
     }
 
-    //a traves del codigo de un proveedor obtiene el porcentaje de solidos totales de un laboratorio
-    public List<Double> obtenerPorcentajeSolidosTotalesLaboratorio(String codigoProveedor) {
-        return laboratorioRepository.findPorcSolidosTotalesByProveedor(codigoProveedor);
+    //obtiene los dias que de mañana un proveeodor envio leche a un acopio
+    public int contarDiasAcopiom(String codigoProveedor) {
+        List<String> turnos = acopioRepository.findTurnoByProveedor(codigoProveedor);
+        int diasAcopiom = 0;
+
+        for (String turno : turnos) {
+            if (turno != null && turno.equalsIgnoreCase("M")) {
+                diasAcopiom++;
+            }
+        }
+
+        return diasAcopiom;
     }
 
+    //obtiene los dias que de tarde un proveeodor envio leche a un acopio
+    public int contarDiasAcopiot(String codigoProveedor) {
+        List<String> turnos = acopioRepository.findTurnoByProveedor(codigoProveedor);
+        int diasAcopiot = 0;
+
+        for (String turno : turnos) {
+            if (turno != null && turno.equalsIgnoreCase("T")) {
+                diasAcopiot++;
+            }
+        }
+
+        return diasAcopiot;
+    }
+
+    //obtiene los dias que de mañana y tarde un proveedor envio leche a un acopio
+    public int contarDiasAcopiomt(String codigoProveedor) {
+        List<AcopioEntity> acopios = acopioRepository.findAllByProveedor(codigoProveedor);
+        int contadorDiasAcopio = 0;
+
+        Map<String, Set<String>> fechaTurnoMap = new HashMap<>();
+        for (AcopioEntity acopio : acopios) {
+            String fecha = acopio.getFecha();
+            String turno = acopio.getTurno();
+
+            if (fecha != null && turno != null && (turno.equalsIgnoreCase("M") || turno.equalsIgnoreCase("T"))) {
+                Set<String> turnos = fechaTurnoMap.getOrDefault(fecha, new HashSet<>());
+                turnos.add(turno);
+                fechaTurnoMap.put(fecha, turnos);
+            }
+        }
+
+        for (Set<String> turnos : fechaTurnoMap.values()) {
+            if (turnos.contains("M") && turnos.contains("T")) {
+                contadorDiasAcopio++;
+            }
+        }
+
+        return contadorDiasAcopio;
+    }
+
+    public QuincenaEntity crearQuincena(String codigoProveedor) {
+        // Obtener proveedor
+        ProveedorEntity proveedor = obtenerProveedorPorCodigo(codigoProveedor);
+        if (proveedor == null) {
+            throw new IllegalArgumentException("Proveedor no encontrado");
+        }
+
+        // Obtener kilos de leche del proveedor
+        double totalKilosLeche = obtenerTotalKilosLechePorProveedor(codigoProveedor);
+
+        // Obtener fecha del primer acopio del proveedor
+        Date fechaAcopio = obtenerFechaPorProveedor(codigoProveedor);
+        if (fechaAcopio == null) {
+            throw new IllegalArgumentException("No se encontraron acopios para el proveedor");
+        }
+
+        // Obtener número de quincena
+        int numeroQuincena = obtenerNumeroQuincena(fechaAcopio);
+
+        // Obtener porcentaje total de grasa del laboratorio del proveedor
+        double totalPorcentajeGrasaLaboratorio = obtenerTotalPorcentajeGrasaLaboratorio(codigoProveedor);
+
+        // Obtener porcentaje total de sólidos totales del laboratorio del proveedor
+        double totalPorcentajeSolidosTotalesLaboratorio = obtenerTotalPorcentajeSolidosTotalesLaboratorio(codigoProveedor);
+
+        // Contar días de mañana (M) en los acopios del proveedor
+        int diasAcopiom = contarDiasAcopiom(codigoProveedor);
+
+        // Contar días de tarde (T) en los acopios del proveedor
+        int diasAcopiot = contarDiasAcopiot(codigoProveedor);
+
+        // Contar días de mañana (M) y tarde (T) en los acopios del proveedor
+        int diasAcopiomt = contarDiasAcopiomt(codigoProveedor);
+
+        // Crear nueva quincena
+        QuincenaEntity nuevaQuincena = new QuincenaEntity();
+        nuevaQuincena.setProveedor(proveedor);
+        nuevaQuincena.setKilos(totalKilosLeche);
+        nuevaQuincena.setFecha(fechaAcopio);
+        nuevaQuincena.setQuincena(numeroQuincena);
+        nuevaQuincena.setPorcentajeGrasa(totalPorcentajeGrasaLaboratorio);
+        nuevaQuincena.setPorcentajeSolidosTotales(totalPorcentajeSolidosTotalesLaboratorio);
+        nuevaQuincena.setDiasAcopioM(diasAcopiom);
+        nuevaQuincena.setDiasAcopioT(diasAcopiot);
+        nuevaQuincena.setDiasAcopioMT(diasAcopiomt);
+
+        return quincenaRepository.save(nuevaQuincena);
+    }
 
     //Como obtener la variacion porcentual de los kilos de un proveedor de la quincena actual respecto
     //a la quincena anterior
