@@ -95,7 +95,7 @@ public class QuincenaService {
         }
     }
 
-    //a traves del codigo de un proveedor obtiene el porcentaje TOTAL de grasa de un laboratorio
+    //a traves del codigo de un proveedor obtiene el porcentaje de grasa de un laboratorio
     public double obtenerTotalPorcentajeGrasaLaboratorio(String codigoProveedor) {
         List<Double> porcentajesGrasa = laboratorioRepository.findPorcGrasaByProveedor(codigoProveedor);
         double totalPorcentajeGrasa = 0.0;
@@ -109,7 +109,7 @@ public class QuincenaService {
         return totalPorcentajeGrasa;
     }
 
-    //a traves del codigo de un proveedor obtiene el porcentaje TOTAL de solidos totales de un laboratorio
+    //a traves del codigo de un proveedor obtiene el porcentaje de solidos totales de un laboratorio
     public double obtenerTotalPorcentajeSolidosTotalesLaboratorio(String codigoProveedor) {
         List<Double> porcentajesSolidosTotales = laboratorioRepository.findPorcSolidosTotalesByProveedor(codigoProveedor);
         double totalPorcentajeSolidosTotales = 0.0;
@@ -226,51 +226,5 @@ public class QuincenaService {
         return quincenaRepository.save(nuevaQuincena);
     }
 
-    //Como obtener la variacion porcentual de los kilos de un proveedor de la quincena actual respecto
-    //a la quincena anterior
-    public double obtenerVariacionKilos(ProveedorEntity proveedor){
-        List<QuincenaEntity> quincenas = quincenaRepository.findQuincenaEntityByProveedorOrderByFechaDesc(proveedor);
-        if(quincenas.size() > 1){
-            double kilosActual = quincenas.get(0).getKilos();
-            double kilosAnterior = quincenas.get(1).getKilos();
-            double variacionKilos = (kilosActual - kilosAnterior)/kilosAnterior;
-            return variacionKilos;
-        }
-        else{
-            return 0;
-            }
-        }
-
-    //Como obtener la variacion porcentual de grasa de un proveedor de la quincena actual respecto
-    //a la quincena anterior
-
-    public double obtenerVariacionGrasa(ProveedorEntity proveedor){
-        List<QuincenaEntity> quincenas = quincenaRepository.findQuincenaEntityByProveedorOrderByFechaDesc(proveedor);
-        if(quincenas.size() > 1){
-            double grasaActual = quincenas.get(0).getPorcentajeGrasa();
-            double grasaAnterior = quincenas.get(1).getPorcentajeGrasa();
-            double variacionGrasa = (grasaActual - grasaAnterior)/grasaAnterior;
-            return variacionGrasa;
-        }
-        else{
-            return 0;
-        }
-    }
-
-    //Como obtener la variacion porcentual de solidos totales de un proveedor de la quincena actual respecto
-    //a la quincena anterior
-
-    public double obtenerVariacionSolidos(ProveedorEntity proveedor){
-        List<QuincenaEntity> quincenas = quincenaRepository.findQuincenaEntityByProveedorOrderByFechaDesc(proveedor);
-        if(quincenas.size() > 1){
-            double solidosActual = quincenas.get(0).getPorcentajeSolidosTotales();
-            double solidosAnterior = quincenas.get(1).getPorcentajeSolidosTotales();
-            double variacionSolidos = (solidosActual - solidosAnterior)/solidosAnterior;
-            return variacionSolidos;
-        }
-        else{
-            return 0;
-        }
-    }
 
 }

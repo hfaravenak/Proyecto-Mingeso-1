@@ -18,4 +18,5 @@ public interface LaboratorioRepository extends JpaRepository<LaboratorioEntity, 
     @Query("SELECT e.porcSolidosTotales FROM LaboratorioEntity e WHERE e.proveedor = :codigoProveedor")
     List<Double> findPorcSolidosTotalesByProveedor(@Param("codigoProveedor") String codigoProveedor);
 
+
 }

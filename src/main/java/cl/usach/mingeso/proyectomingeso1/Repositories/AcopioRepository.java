@@ -10,7 +10,6 @@ import java.util.List;
 
 @Repository
 public interface AcopioRepository extends JpaRepository<AcopioEntity, Integer> {
-    AcopioEntity findByProveedor(String codigo);
 
     @Query("SELECT a.kls_leche FROM AcopioEntity a WHERE a.proveedor = :codigoProveedor")
     List<String> findKlsLecheByProveedor(@Param("codigoProveedor") String codigoProveedor);
@@ -20,5 +19,8 @@ public interface AcopioRepository extends JpaRepository<AcopioEntity, Integer> {
 
     @Query("SELECT a FROM AcopioEntity a WHERE a.proveedor = :codigo")
     List<AcopioEntity> findAllByProveedor(@Param("codigo") String codigo);
+
+    @Query("SELECT COUNT(a) FROM AcopioEntity a WHERE a.proveedor = :codigoProveedor")
+    int countByProveedor(@Param("codigoProveedor") String codigoProveedor);
 
 }

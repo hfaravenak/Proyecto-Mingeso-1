@@ -25,13 +25,6 @@ public class QuincenaController {
         return quincenaService.obtenerQuincenas();
     }
 
-    @GetMapping("/variacion-kilos/{codigo}")
-    public double obtenerVariacionKilos(@PathVariable("codigo") String codigo) {
-        ProveedorEntity proveedor = proveedorService.findByCodigo(codigo);
-        return quincenaService.obtenerVariacionKilos(proveedor);
-    }
-
-
     @GetMapping("nuevaquincena/{codigo}")
     public QuincenaEntity nuevaQuincena(@PathVariable("codigo") String codigo) {
         return quincenaService.crearQuincena(codigo);
@@ -77,4 +70,5 @@ public class QuincenaController {
     public Integer obtenerDiasAcopioMañanaYtarde(@PathVariable("codigo") String codigo) {
         return quincenaService.contarDiasAcopiomt(codigo);
     }
+
 }
