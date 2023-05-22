@@ -16,3 +16,5 @@ public interface QuincenaRepository extends JpaRepository<QuincenaEntity, Intege
     List<QuincenaEntity> findAllByProveedorOrderByFechaDesc(String codigoProveedor);
 
 }
+
+

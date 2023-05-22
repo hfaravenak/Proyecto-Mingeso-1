@@ -25,9 +25,14 @@ public class PlanillaController {
     @GetMapping("/obtener-planilla")
     public List<PlanillaEntity> obtenerPlanilla(){ return planillaService.obtenerPlanillas(); }
 
+    @GetMapping("/crear-planilla/{codigo}")
+    public PlanillaEntity crearPlanilla(@PathVariable("codigo") String codigoProveedor) {
+        return planillaService.crearPlanilla(codigoProveedor);
+    }
+
     @GetMapping("/obtener-quincena/{codigo}")
     public String obtenerQuincenaPlanilla(@PathVariable("codigo") String codigoProveedor) {
-        return planillaService.obtenerFechaMasReciente(codigoProveedor);
+        return planillaService.obtenerQuincena(codigoProveedor);
     }
 
     @GetMapping("/obtener-nombreproveedor/{codigo}")
@@ -37,7 +42,7 @@ public class PlanillaController {
 
     @GetMapping("/obtener-klstotales/{codigo}")
     public Double obtenerKilosTotalesProveedor(@PathVariable("codigo") String codigoProveedor) {
-        return planillaService.obtenerSumaKilosPorProveedor(codigoProveedor);
+        return planillaService.obtenerKilosPorProveedor(codigoProveedor);
     }
 
     @GetMapping("/obtener-nroDiasQueEnvioLeche/{codigo}")
@@ -50,32 +55,120 @@ public class PlanillaController {
         return planillaService.promedioDiarioKilosLeche(codigoProveedor);
     }
 
-    @GetMapping("/variacion-kilos/{codigo}")
-    public double obtenerVariacionKilos(@PathVariable("codigo") String codigo) {
-        ProveedorEntity proveedor = proveedorService.findByCodigo(codigo);
-        return planillaService.obtenerVariacionKilos(proveedor);
+    @GetMapping("/variacion-klsleche/{codigo}")
+    public Double obtenerVariacionKlsLeche(@PathVariable("codigo") String codigoProveedor) {
+        return planillaService.obtenerVariacionLeche(codigoProveedor);
     }
 
     @GetMapping("/variacion-grasa/{codigo}")
-    public double obtenerVariacionGrasa(@PathVariable("codigo") String codigo) {
-        ProveedorEntity proveedor = proveedorService.findByCodigo(codigo);
-        return planillaService.obtenerVariacionGrasa(proveedor);
+    public Double obtenerVariacionGrasa(@PathVariable("codigo") String codigoProveedor) {
+        return planillaService.obtenerVariacionGrasa(codigoProveedor);
     }
 
     @GetMapping("/variacion-solidos/{codigo}")
-    public double obtenerVariacionSolidos(@PathVariable("codigo") String codigo) {
-        ProveedorEntity proveedor = proveedorService.findByCodigo(codigo);
-        return planillaService.obtenerVariacionSolidos(proveedor);
+    public Double obtenerVariacionSolidos(@PathVariable("codigo") String codigoProveedor) {
+        return planillaService.obtenerVariacionSolidos(codigoProveedor);
     }
 
     @GetMapping("/obtener-porcentajeGrasa/{codigo}")
     public Double obtenerPorcentajeGrasa(@PathVariable("codigo") String codigoProveedor) {
-        return planillaService.obtenerTotalPorcentajeGrasaLaboratorio(codigoProveedor);
+        return planillaService.obtenerPorcentajeGrasaLaboratorio(codigoProveedor);
     }
 
     @GetMapping("/obtener-porcentajeST/{codigo}")
     public Double obtenerPorcentajeST(@PathVariable("codigo") String codigoProveedor) {
-        return planillaService.obtenerTotalPorcentajeSolidosTotalesLaboratorio(codigoProveedor);
+        return planillaService.obtenerPorcentajeSolidosTotalesLaboratorio(codigoProveedor);
+    }
+
+    @GetMapping("/obtener-categoriaProveedor/{codigo}")
+    public String obtenerCategoria(@PathVariable("codigo") String codigoProveedor) {
+        return planillaService.obtenerCategoriaProveedor(codigoProveedor);
+    }
+
+    @GetMapping("/calcular-pagoLecheProveedor/{codigo}")
+    public Double calcularPagoLeche(@PathVariable("codigo") String codigoProveedor) {
+        return planillaService.calcularPagoLecheProveedor(codigoProveedor);
+    }
+
+
+    @GetMapping("/calcular-pagograsa/{codigo}")
+    public Double calcularPagoGrasa(@PathVariable("codigo") String codigoProveedor) {
+        return planillaService.calcularPagoPorPorcentajeGrasa(codigoProveedor);
+    }
+
+    @GetMapping("/calcular-pagosolidostotales/{codigo}")
+    public Double calcularPagoSolidosTotales(@PathVariable("codigo") String codigoProveedor) {
+        return planillaService.calcularPagoPorPorcentajeSolidosTotales(codigoProveedor);
+    }
+
+    @GetMapping("/calcular-pagosoKlsLeche/{codigo}")
+    public Double calcularPagoKLSLeche(@PathVariable("codigo") String codigoProveedor) {
+        return planillaService.generarPagoAcopioLecheSinBonificacion(codigoProveedor);
+    }
+
+    @GetMapping("/obtener-diasAcopioM/{codigo}")
+    public Integer obtenerDiasAcopioM(@PathVariable("codigo") String codigoProveedor) {
+        return planillaService.obtenerDiasAcopioM(codigoProveedor);
+    }
+
+    @GetMapping("/obtener-diasAcopioT/{codigo}")
+    public Integer obtenerDiasAcopioT(@PathVariable("codigo") String codigoProveedor) {
+        return planillaService.obtenerDiasAcopioT(codigoProveedor);
+    }
+
+    @GetMapping("/obtener-diasAcopioMT/{codigo}")
+    public Integer obtenerDiasAcopioMT(@PathVariable("codigo") String codigoProveedor) {
+        return planillaService.obtenerDiasAcopioMT(codigoProveedor);
+    }
+
+    @GetMapping("/obtener-bonificacionfrecuencia/{codigo}")
+    public Double obtenerBonificacionFrecuencia(@PathVariable("codigo") String codigoProveedor) {
+        return planillaService.bonificacionXfrecuencia(codigoProveedor);
+    }
+
+    @GetMapping("/obtener-pagoAcopioLeche/{codigo}")
+    public Double pagoAcopioLeche(@PathVariable("codigo") String codigoProveedor) {
+        return planillaService.pagoAcopioLeche(codigoProveedor);
+    }
+
+    @GetMapping("/descuento-variacionLeche/{codigo}")
+    public Double descuentoVariacionLeche(@PathVariable("codigo") String codigoProveedor) {
+        return planillaService.descuentoVariacionNegativaKlsLeche(codigoProveedor);
+    }
+
+    @GetMapping("/descuento-variacionGrasa/{codigo}")
+    public Double descuentoVariacionGrasa(@PathVariable("codigo") String codigoProveedor) {
+        return planillaService.descuentoVariacionNegativaGrasa(codigoProveedor);
+    }
+
+    @GetMapping("/descuento-variacionSolidos/{codigo}")
+    public Double descuentoVariacionSolidos(@PathVariable("codigo") String codigoProveedor) {
+        return planillaService.descuentoVariacionSolidosTotales(codigoProveedor);
+    }
+
+    @GetMapping("/obtener-descuentos/{codigo}")
+    public Double descuentoVariaciones(@PathVariable("codigo") String codigoProveedor) {
+        return planillaService.obtenerDescuentos(codigoProveedor);
+    }
+
+    @GetMapping("/obtener-stringDeretencion/{codigo}")
+    public String obtenerRetencion(@PathVariable("codigo") String codigoProveedor) {
+        return planillaService.obtenerRetencionString(codigoProveedor);
+    }
+
+    @GetMapping("/obtener-pagoTotal/{codigo}")
+    public Double obtenerPagoTotal(@PathVariable("codigo") String codigoProveedor) {
+        return planillaService.obtenerPagoTotal(codigoProveedor);
+    }
+
+    @GetMapping("/obtener-montoRetencion/{codigo}")
+    public Double obtenerMontoRetencion(@PathVariable("codigo") String codigoProveedor) {
+        return planillaService.obtenerMontoRetencion(codigoProveedor);
+    }
+
+    @GetMapping("/obtener-pagoFinal/{codigo}")
+    public Double obtenerPagoFinal(@PathVariable("codigo") String codigoProveedor) {
+        return planillaService.pagoFinal(codigoProveedor);
     }
 
 

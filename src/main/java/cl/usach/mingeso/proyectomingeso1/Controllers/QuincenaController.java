@@ -36,7 +36,7 @@ public class QuincenaController {
           return quincenaService.obtenerProveedorPorCodigo(codigo);
     }
 
-    @GetMapping("obtener-klsleche/{codigo}")
+    @GetMapping("/obtener-totalKlsLeche/{codigo}")
     public Double obtenerTodosKlsLeche(@PathVariable("codigo") String codigo) {
         return quincenaService.obtenerTotalKilosLechePorProveedor(codigo);
     }

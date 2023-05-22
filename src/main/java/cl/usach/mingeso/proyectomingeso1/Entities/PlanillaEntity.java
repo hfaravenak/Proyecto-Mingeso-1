@@ -1,14 +1,12 @@
 package cl.usach.mingeso.proyectomingeso1.Entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "planilla")
 public class PlanillaEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Integer ID;
     private String quincena;
@@ -22,9 +20,9 @@ public class PlanillaEntity {
     private Double porcentajeVariacionGrasa;
     private Double porcentajeSolidosTotales;
     private Double porcentajeVariacionSolidosTotales;
-    private Integer pagoLeche;
-    private Integer pagoGrasa;
-    private Integer pagoSolidosTotales;
+    private Double pagoLeche;
+    private Double pagoGrasa;
+    private Double pagoSolidosTotales;
     private Double bonificacionFrecuencia;
     private Double dsctoVariacionLeche;
     private Double dsctoVariacionGrasa;
@@ -129,27 +127,27 @@ public class PlanillaEntity {
         this.porcentajeVariacionSolidosTotales = porcentajeVariacionSolidosTotales;
     }
 
-    public Integer getPagoLeche() {
+    public Double getPagoLeche() {
         return pagoLeche;
     }
 
-    public void setPagoLeche(Integer pagoLeche) {
+    public void setPagoLeche(Double pagoLeche) {
         this.pagoLeche = pagoLeche;
     }
 
-    public Integer getPagoGrasa() {
+    public Double getPagoGrasa() {
         return pagoGrasa;
     }
 
-    public void setPagoGrasa(Integer pagoGrasa) {
+    public void setPagoGrasa(Double pagoGrasa) {
         this.pagoGrasa = pagoGrasa;
     }
 
-    public Integer getPagoSolidosTotales() {
+    public Double getPagoSolidosTotales() {
         return pagoSolidosTotales;
     }
 
-    public void setPagoSolidosTotales(Integer pagoSolidosTotales) {
+    public void setPagoSolidosTotales(Double pagoSolidosTotales) {
         this.pagoSolidosTotales = pagoSolidosTotales;
     }
 
