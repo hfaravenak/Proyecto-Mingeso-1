@@ -6,15 +6,15 @@ import cl.usach.mingeso.proyectomingeso1.Services.PlanillaService;
 import cl.usach.mingeso.proyectomingeso1.Services.ProveedorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/planilla")
 public class PlanillaController {
     @Autowired
@@ -22,8 +22,34 @@ public class PlanillaController {
     @Autowired
     ProveedorService proveedorService;
 
-    @GetMapping("/obtener-planilla")
-    public List<PlanillaEntity> obtenerPlanilla(){ return planillaService.obtenerPlanillas(); }
+
+    @GetMapping("/ingresar-proveedor")
+    public String planilla(){
+        return "ingresar-proveedor"; }
+    @PostMapping("/ingresar-proveedor")
+    public String nuevaPlanilla(@RequestParam("codigo") String codigo){
+        planillaService.crearPlanilla(codigo);
+        return "redirect:/planilla/listar";
+    }
+
+    @GetMapping("/listar")
+    public String listar(Model model) {
+        List<PlanillaEntity> planillas = planillaService.obtenerPlanillas();
+        model.addAttribute("planillas", planillas);
+        return "mostrar-planilla";
+    }
+
+
+
+
+    /*
+    @GetMapping("/obtener-planillaporproveedor/{codigo}")
+    public ArrayList<PlanillaEntity> obtenerPlanillaPorProveedor(@PathVariable("codigo") String codigoProveedor) {
+        return planillaService.obtenerPlanillaPorCodigoProveedor(codigoProveedor);
+    }
+
+    @GetMapping("/obtener-planillas")
+    public List<PlanillaEntity> obtenerPlanillas(){ return planillaService.obtenerPlanillas(); }
 
     @GetMapping("/crear-planilla/{codigo}")
     public PlanillaEntity crearPlanilla(@PathVariable("codigo") String codigoProveedor) {
@@ -170,6 +196,7 @@ public class PlanillaController {
     public Double obtenerPagoFinal(@PathVariable("codigo") String codigoProveedor) {
         return planillaService.pagoFinal(codigoProveedor);
     }
+    */
 
 
 }

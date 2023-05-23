@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class PlanillaService {
@@ -35,6 +33,9 @@ public class PlanillaService {
 
     public List<PlanillaEntity> obtenerPlanillas(){ return planillaRepository.findAll(); }
 
+    public List<PlanillaEntity> obtenerPlanillaPorCodigoProveedor(String codigoProveedor) {
+        return planillaRepository.findByCodigoProveedor(codigoProveedor);
+    }
     //metodo que retorna 1 si la fecha corresponde a la primera quincena y 2 si es la segunda quincena de un mes
     public int obtenerNumeroQuincena(Date fecha) {
         Calendar calendar = Calendar.getInstance();
