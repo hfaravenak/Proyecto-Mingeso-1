@@ -11,6 +11,8 @@ import java.util.List;
 @Repository
 public interface AcopioRepository extends JpaRepository<AcopioEntity, Integer> {
 
+    List<AcopioEntity> findByProveedor(String proveedor);
+
     @Query("SELECT a.kls_leche FROM AcopioEntity a WHERE a.proveedor = :codigoProveedor")
     List<String> findKlsLecheByProveedor(@Param("codigoProveedor") String codigoProveedor);
 

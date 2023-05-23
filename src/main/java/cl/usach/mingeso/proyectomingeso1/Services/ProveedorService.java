@@ -25,8 +25,11 @@ public class ProveedorService {
         proveedorRepository.save(proveedor);
     }
 
-    public ProveedorEntity findByCodigo(String codigo){
-        return proveedorRepository.findByCodigo(codigo);
+    public void eliminarProveedor(String codigo){
+        ProveedorEntity proveedores = proveedorRepository.findByCodigo(codigo);
+        proveedorRepository.delete(proveedores);
     }
+
+
 
 }

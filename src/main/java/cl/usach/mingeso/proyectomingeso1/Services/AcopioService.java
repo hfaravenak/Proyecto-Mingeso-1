@@ -19,6 +19,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AcopioService {
@@ -27,6 +28,12 @@ public class AcopioService {
     private final Logger logg = LoggerFactory.getLogger(AcopioService.class);
     public List<AcopioEntity> obtenerAcopios() { return acopioRepository.findAll(); }
     public AcopioEntity guardarDatosAcopios(AcopioEntity acopio) { return acopioRepository.save(acopio); }
+
+    public void eliminarAcopio(String proveedor) {
+        List<AcopioEntity> acopios = acopioRepository.findByProveedor(proveedor);
+        acopioRepository.deleteAll(acopios);
+        logg.info("Se han eliminado " + acopios.size() + " acopios con proveedor: " + proveedor);
+    }
 
     @Generated
     public String guardarArchivo(MultipartFile file){

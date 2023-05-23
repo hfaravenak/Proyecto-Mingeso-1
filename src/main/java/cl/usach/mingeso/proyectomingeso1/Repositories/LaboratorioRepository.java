@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface LaboratorioRepository extends JpaRepository<LaboratorioEntity, Integer> {
-    LaboratorioEntity findByProveedor(String codigo);
+    List<LaboratorioEntity> findByProveedor(String codigo);
 
     @Query("SELECT l.porcentajeGrasa FROM LaboratorioEntity l WHERE l.proveedor = :codigoProveedor")
     List<Double> findPorcGrasaByProveedor(@Param("codigoProveedor") String codigoProveedor);

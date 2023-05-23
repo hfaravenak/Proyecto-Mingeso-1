@@ -28,6 +28,11 @@ public class LaboratorioService {
 
     public LaboratorioEntity guardarDataLab(LaboratorioEntity laboratorio) { return laboratorioRepository.save(laboratorio); }
 
+    public void eliminarLaboratorio(String proveedor) {
+        List<LaboratorioEntity> laboratorios = laboratorioRepository.findByProveedor(proveedor);
+        laboratorioRepository.deleteAll(laboratorios);
+        logg.info("Se han eliminado " + laboratorios.size() + " laboratorios con proveedor: " + proveedor);
+    }
     @Generated
     public String guardarArchivo(MultipartFile file){
         String filename = file.getOriginalFilename();
