@@ -39,7 +39,7 @@ class AcopioServiceTests {
     void guardarDataDBTest1(){
         acopioService.guardarDataDB("2023/01/01", "M", "00002", "100");
         assertNotNull(acopioService.obtenerAcopios());
-        acopioService.eliminarAcopio("00001");
+        acopioService.eliminarAcopio("00002");
     }
 
 }
